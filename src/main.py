@@ -6,7 +6,7 @@ import httpx
 app = FastAPI()
 github_client_id = 'bc59d750d6799f0c983e'
 #add your own secret key to github_client_secret
-github_client_secret = ''
+github_client_secret = '3620a8948fddd371c20460b0089276a092e01a74'
 
 @app.get('/')
 async def github_login():
@@ -52,13 +52,12 @@ async def callback(code: str):
     except Exception:
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
-def create_dic_object(repo):
-    
-    topics = ', '.join(repo['topics']) if 'topics' in repo else ''
+def create_repo_object(repo):
+    topics = ', '.join(repo.get('topics', []))
     obj = {
         'name': repo['full_name'],
-        'desc': repo['description'],
-        'URL': repo['url'],
+        'description': repo['description'] if repo['description'] else '',
+        'URL': repo['html_url'],
         'license': repo['license']['name'] if repo['license'] else '',
         'topics': topics
     }
@@ -69,7 +68,7 @@ def get_starred_repos(response):
     amount = 0
     for repo in response:
         if not repo['private']:
-            repos.append(create_dic_object(repo))
+            repos.append(create_repo_object(repo))
             amount += 1
     result = {'number_of_public_starred_repos': amount, 'starred_repos': repos}
     return result
