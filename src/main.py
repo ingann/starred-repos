@@ -6,7 +6,7 @@ import httpx
 app = FastAPI()
 github_client_id = 'bc59d750d6799f0c983e'
 #add your own secret key to github_client_secret
-github_client_secret = '3620a8948fddd371c20460b0089276a092e01a74'
+github_client_secret = ''
 
 @app.get('/')
 async def github_login():
