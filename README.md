@@ -1,6 +1,6 @@
 # CSC-app
 
-This is a FastAPI app that utilizes GitHub OAuth2 authentication and lets usesrs to retrieve their public starred repositories using GitHub API.
+This is a python FastAPI app that utilizes GitHub OAuth2 authentication and lets usesrs to retrieve their public starred repositories using GitHub API.
 
 ## Configuration
 
