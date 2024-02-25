@@ -4,10 +4,11 @@ from httpx import HTTPStatusError
 import httpx
 
 app = FastAPI()
-github_client_id = 'bc59d750d6799f0c983e'
-#add your own secret key to github_client_secret
+#add your own client_id and secret key credentials to github_client_id and github_client_secret
+github_client_id = ''
 github_client_secret = ''
 
+#for the github_login and callback functions I utilized this tutorial https://www.youtube.com/watch?v=Pm938UxLEwQ
 @app.get('/')
 async def github_login():
     return RedirectResponse(f'https://github.com/login/oauth/authorize?client_id={github_client_id}', status_code=302)
