@@ -4,7 +4,7 @@ from httpx import HTTPStatusError
 import httpx
 
 app = FastAPI()
-#add your own client_id and secret key credentials to github_client_id and github_client_secret
+#add your own client_id and client_secret credentials to github_client_id and github_client_secret
 github_client_id = ''
 github_client_secret = ''
 
@@ -15,7 +15,6 @@ async def github_login():
 
 @app.get('/callback')
 async def callback(code: str):
-
     if not code:
         raise HTTPException(status_code=400, detail="Invalid code parameter")
 
@@ -24,7 +23,6 @@ async def callback(code: str):
         'client_secret': github_client_secret,
         'code': code
     }
-
     headers = {
         'Accept': 'application/vnd.github+json'
     }
@@ -40,14 +38,12 @@ async def callback(code: str):
         response.raise_for_status()
         response_json = response.json()
         return get_starred_repos(response_json)
-
-
     except HTTPStatusError as http_error:
         status_code = http_error.response.status_code
         if status_code == 401:
-            raise HTTPException(status_code=401, detail="Unauthorized")
+            raise HTTPException(status_code=401, detail="Unauthorized. Check that you have an existing and valid access token.")
         elif status_code == 403:
-            raise HTTPException(status_code=403, detail="Forbidden")
+            raise HTTPException(status_code=403, detail="Forbidden. Check that you have correct scopes and/or permissions in your access token.")
         else:
             raise HTTPException(status_code=500, detail="Internal Server Error")
     except Exception:
