@@ -5,8 +5,12 @@ import httpx
 
 app = FastAPI()
 #add your own client_id and client_secret credentials to github_client_id and github_client_secret
-github_client_id = ''
-github_client_secret = ''
+#github_client_id = ''
+#github_client_secret = ''
+
+github_client_id = 'bc59d750d6799f0c983e'
+#add your own secret key to github_client_secret
+github_client_secret = '3620a8948fddd371c20460b0089276a092e01a74'
 
 #for the github_login and callback functions I utilized this tutorial https://www.youtube.com/watch?v=Pm938UxLEwQ
 @app.get('/')
@@ -69,5 +73,3 @@ def get_starred_repos(response):
             amount += 1
     result = {'number_of_public_starred_repos': amount, 'starred_repos': repos}
     return result
-    
-
