@@ -39,15 +39,22 @@ async def callback(code: str):
         response_json = response.json()
         return get_starred_repos(response_json)
     except HTTPStatusError as http_error:
-        status_code = http_error.response.status_code
-        if status_code == 401:
-            raise HTTPException(status_code=401, detail="Unauthorized. Check that you have an existing and valid access token.")
-        elif status_code == 403:
-            raise HTTPException(status_code=403, detail="Forbidden. Check that you have correct scopes and/or permissions in your access token.")
-        else:
-            raise HTTPException(status_code=500, detail="Internal Server Error")
+        handle_status_error(http_error.response.status_code)
     except Exception:
+        handle_general_error()
+
+
+def handle_status_error(status_code: int):
+    if status_code == 401:
+        raise HTTPException(status_code=401, detail="Unauthorized. Check that you have an existing and valid access token.")
+    elif status_code == 403:
+        raise HTTPException(status_code=403, detail="Forbidden. Check that you have correct scopes and/or permissions in your access token.")
+    else:
         raise HTTPException(status_code=500, detail="Internal Server Error")
+
+
+def handle_general_error():
+    raise HTTPException(status_code=500, detail="Internal Server Error")
 
 def create_repo_object(repo):
     topics = ', '.join(repo.get('topics', []))
@@ -67,5 +74,5 @@ def get_starred_repos(response):
         if not repo['private']:
             repos.append(create_repo_object(repo))
             amount += 1
-    result = {'number_of_public_starred_repos': amount, 'starred_repos': repos}
+    result = {'number_of_public_starred_repositories': amount, 'starred_repositories': repos}
     return result
