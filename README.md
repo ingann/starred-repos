@@ -45,8 +45,7 @@ The App will be accessible at `http://127.0.0.1:8000/`
 
 For testing the application:
 
-Before testing make sure you have a valid access token with correct scopes. 
-Scopes that are required: read:user and public_repo.
+Before testing make sure that you have an access token ready.
 
 1. Go to `http://127.0.0.1:8000/` in your web browser
 2. To authenticate yourself, click on the "Login with GitHub" button
