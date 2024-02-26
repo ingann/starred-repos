@@ -1,4 +1,4 @@
-# CSC-app
+# Starred-repos
 
 This is a python FastAPI app that utilizes GitHub OAuth2 authentication and lets users to retrieve their public starred repositories using GitHub API.
 
