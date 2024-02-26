@@ -43,7 +43,6 @@ async def callback(code: str):
     except Exception:
         handle_general_error()
 
-
 def handle_status_error(status_code: int):
     if status_code == 401:
         raise HTTPException(status_code=401, detail="Unauthorized. Check that you have an existing and valid access token.")
@@ -51,7 +50,6 @@ def handle_status_error(status_code: int):
         raise HTTPException(status_code=403, detail="Forbidden. Check that you have correct scopes and/or permissions in your access token.")
     else:
         raise HTTPException(status_code=500, detail="Internal Server Error")
-
 
 def handle_general_error():
     raise HTTPException(status_code=500, detail="Internal Server Error")
